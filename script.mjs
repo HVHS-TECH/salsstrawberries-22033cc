@@ -81,7 +81,24 @@ function fb_authenticate(){
 
 };
 function fb_writeRecord(){
+    
+        const REF = ref(fb_Db,"users/" + userUid);
+        set(REF, {
+            userName:document.getElementById('name').value,
+            userFavFruit:document.getElementById('favoriteFruit').value,
+            userQuantity:parseInt(document.getElementById('fruitQuantity').value)}).then(() => { 
+        console.log('%c preferences recorded', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_G +';' )
+        })
+    .catch((error) => {
+        console.log(error);
+        console.log('%c something went wrong! ', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_R +';' );
+    })
+document.getElementById('email').innerHTML = "Hello "+ document.getElementById('name').value +"! thank you for informing our company your preferences. it will be very good for companies to know you like "+document.getElementById('favoriteFruit').value+".we will send you more emails to do with "+document.getElementById('favoriteFruit').value +" we will try and accomate for your taste of "+parseInt(document.getElementById('fruitQuantity').value + " "+ document.getElementById('name').value +" a week!");
+console.log(document.getElementById('favoriteFruit').value);
 
-console.log(document.getElementById('favoriteFruit:value'));
 
 }
