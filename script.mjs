@@ -15,7 +15,7 @@ const COL_R = '#ff0000'
 console.log('%c fb_io.mjs',
             'color: blue; background-color: white;');
 var fb_Db; 
-var userUid = "asdfasd";
+var userUid = "uid";
 /**************************************************************/
 // Import all external constants & functions required
 /**************************************************************/
@@ -80,13 +80,16 @@ function fb_authenticate(){
     
 
 };
+
 function fb_writeRecord(){
     
-        const REF = ref(fb_Db,"users/" + userUid);
-        set(REF, {
-            userName:document.getElementById('name').value,
-            userFavFruit:document.getElementById('favoriteFruit').value,
-            userQuantity:parseInt(document.getElementById('fruitQuantity').value)}).then(() => { 
+    const REF = ref(fb_Db,"users/" + userUid);
+        
+    set(REF,{
+        userName:document.getElementById('name').value,
+        userFavFruit:document.getElementById('favoriteFruit').value,
+        userQuantity:parseInt(document.getElementById('fruitQuantity').value)
+    }).then(() => { 
         console.log('%c preferences recorded', 
                 'color: ' + COL_C + 
                 '; background-color: ' + COL_G +';' )
@@ -97,8 +100,45 @@ function fb_writeRecord(){
                 'color: ' + COL_C + 
                 '; background-color: ' + COL_R +';' );
     })
-document.getElementById('email').innerHTML = "Hello "+ document.getElementById('name').value +"! thank you for informing our company your preferences. it will be very good for companies to know you like "+document.getElementById('favoriteFruit').value+".we will send you more emails to do with "+document.getElementById('favoriteFruit').value +" we will try and accomate for your taste of "+parseInt(document.getElementById('fruitQuantity').value + " "+ document.getElementById('name').value +" a week!");
+
+    console.log('%c fb_readRecord ', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_B +';' );
+                const dbReference= ref(fb_Db, "users/" + userUid);
+    get(dbReference).then((snapshot) => {
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+            console.log('%c Record found! ', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_G +';' );
+            console.log(snapshot.val());
+             var user_Name = snapshot.val().userName
+             var user_favourite_fruit = snapshot.val().userFavFruit
+             var user_fruit_quantity = snapshot.val().userQuantity
+  
+            console.log(user_Name)
+            console.log(user_favourite_fruit)
+            console.log(user_fruit_quantity)
+        } else {
+            console.log('%c Record NOT found ', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_R +';' );
+
+        }
+    }).catch((error) => {
+       console.log('%c Error! ', 
+                'color: ' + COL_C + 
+                '; background-color: ' + COL_R +';' ); 
+        console.log(error);
+    
+    });
+    console.log(user_Name)
+    console.log(user_favourite_fruit)
+    console.log(user_fruit_quantity)
+document.getElementById('email').innerHTML = "Hello "+ user_Name +"! thank you for informing our company your preferences. it will be very good for companies to know you like "+user_favourite_fruit+".we will send you more emails to do with "+ user_favourite_fruit +" we will try and accomate for your taste of "+user_fruit_quantity +"servings a week!";
 console.log(document.getElementById('favoriteFruit').value);
 
 
-}
+
+};
