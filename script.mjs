@@ -73,7 +73,6 @@ function fb_authenticate(){
 
     signInWithPopup(AUTH, PROVIDER).then((result) => {
         alert("thank you for signing correctly")
-        console.log(result.user.uid)
         userUid = result.user.uid;
         console.log(result.user.uid)
     })
@@ -104,7 +103,7 @@ function fb_writeRecord(){
     console.log('%c fb_readRecord ', 
                 'color: ' + COL_C + 
                 '; background-color: ' + COL_B +';' );
-                const dbReference= ref(fb_Db, "users/" + userUid);
+                const dbReference= ref(fb_Db, "users/" + userUid +"sals_strawberries" );
     get(dbReference).then((snapshot) => {
         var fb_data = snapshot.val();
 
